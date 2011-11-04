@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>ChoroplethJS: Color for your world</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="Scott Grogan">
+	<!-- Date: 2011-01-18 -->
+  <link href="css/styles.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+
+<h1>ChoroplethJS</h1>
+
+<ul id="bullets">
+  <li>Mobile-friendly maps.</li>
+  <li>You choose the style.</li>
+  <li>Works with Google Maps.</li>
+</ul>
+
+<img class="docs" src="images/docs.png"/>
+<img class="download" src="images/download.png"/>
+
+<div id="map"></div>
+
+<div id="content">
+
+  <div class="slide" id="slide1">
+  <h4>
+    <span class="choroplethjs">ChoroplethJS</span> uses the <a href="raphaeljs.com">Raphaël</a> framework to bring data-driven maps to web-enabled devices.
+    <a href="#" class="next" onclick="nextSlide(2); return false;">Next ></a>
+  </h4>
+  <p>
+    <img src="images/slide01.png"/>
+  </p>
+  </div>
+  
+  <div class="slide" id="slide2">
+  <h4>
+    Getting started is easy. <span class="choroplethjs">ChoroplethJS</span> comes with dependencies bundled. Include the library and you're ready to go.
+    <a href="#" class="next" onclick="nextSlide(3); return false;">Next ></a>
+  </h4>
+  <p>
+    <img src="images/slide02.png"/>
+  </p>
+  </div>
+  
+  <div class="slide" id="slide3">
+  <h4>
+    Color your map by assigning a value to each shape. Use <span class="choroplethjs">ChoroplethJS</span>.getShapeKeys() to get an array of keys.
+    <a href="#" class="next" onclick="nextSlide(4); return false;">Next ></a>
+  </h4>
+  <p>
+    <img src="images/slide03.png"/>
+  </p>
+  </div>
+  
+  <div class="slide" id="slide4">
+    <h4>
+      <span class="choroplethjs">ChoroplethJS</span> gives you plenty of options for customizing the look of your map.
+      <a href="#" class="next" onclick="nextSlide(5); return false;">Next ></a>
+    </h4>
+    <ul>
+  		<li><strong>fill:</strong> The default color of each shape.</li>
+  		<li><strong>fillOpacity:</strong> The default opacity of each shape.</li>
+  		<li><strong>stroke:</strong> The default stroke color of each shape.</li>
+  		<li><strong>strokeOpacity:</strong> The default stroke opacity of each shape.</li>
+  		<li><strong>scale:</strong> The initial scale ratio of the map.</li>
+  		<li><strong>projection:</strong> The ChoroplethJS.Paths object to use.</li>
+  		<li><strong>colors:</strong> An array of colors used when colorizing the map.</li>
+  		<li><strong>speed:</strong> The time (in milliseconds) it takes to fade the map colors in.</li>
+  	</ul>
+    <!--img src="images/slide04.png"/-->
+  </div>
+  
+  <div class="slide" id="slide5">
+  <h4>
+    <span class="choroplethjs">ChoroplethJS</span> comes ready to be integrated with Google Maps.
+    <a href="#" class="next" onclick="nextSlide(6); return false;">Next ></a>
+  </h4>
+  <p>
+    <img src="images/slide05.png"/>
+  </p>
+  </div>
+  
+  <div class="slide" id="slide6">
+    <h4>
+      <span class="choroplethjs">ChoroplethJS</span> API reference.
+      <a href="#" class="next" onclick="nextSlide(7); return false;">Next ></a>
+    </h4>
+    <ul>
+  		<li><strong>scaleTo(value, [callback]):</strong>
+  		  <br/>Scales the entire canvas by the specified multiplier value.</li>
+  		<li><strong>reset()</strong>
+  		  <br/>Resets the color of each shape on the map to the value of options.fill.</li>
+  		<li><strong>setValue(key, value)</strong>
+  		  <br/>Assigns a value and corresponding color to a shape.</li>
+  		<li><strong>getShape(key)</strong>
+  		  <br/>TGets a Raphel shape objet from the current map.</li>
+  		<li><strong>getShapeKeys()</strong>
+  		  <br/>Returns an array with the keys of each shape in the current map.</li>
+  	</ul>
+  </div>
+  
+  <div class="slide" id="slide7">
+  <h4>
+    Create your own projections using standard SVG path notation. <span class="choroplethjs">ChoroplethJS</span> recommends <a href="http://inkscape.org/">Inkscape</a>.
+    <a href="#" class="next" onclick="nextSlide(1); return false;">Next ></a>
+  </h4>
+  <p>
+    <img src="images/slide07.png"/>
+  </p>
+  </div>
+  
+</div>
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
+<script type="text/javascript" src="js/ChoroplethJS.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/data.js"></script>
+
+<script type="text/javascript">
+
+var map = document.getElementById('map');
+var gmap = new google.maps.Map(map, {
+	zoom: 5,
+	center: new google.maps.LatLng(38, -97),
+	topLeft: new google.maps.LatLng(74.03, -180),
+	mapTypeId: google.maps.MapTypeId.TERRAIN,
+	streetViewControl: false,
+	mapTypeControl: false
+});
+
+var cmap = new ChoroplethJS.GmapOverlay();
+cmap.setMap(gmap);
+
+var t = setInterval('colorize()', 3200);
+
+function colorize() {
+  var keys = cmap.getShapeKeys();
+  for (var i = 0; i < keys.length; i++) {
+    cmap.setValue(keys[i], Math.random());
+  }
+}
+
+jQuery('img.docs').toggle( open, close );
+
+function nextSlide(index) {
+  jQuery('.slide').hide();
+  jQuery('#slide' + index).fadeIn(400);
+}
+
+function open() {
+  nextSlide(1);
+  jQuery('body').addClass('awesome');
+  jQuery('.docs').attr('src', 'images/expand.png');
+  jQuery(map).animate({ width: '360px' });
+}
+
+function close() {
+  jQuery('body').removeClass('awesome');
+  jQuery('.docs').attr('src', 'images/docs.png');
+  jQuery(map).animate({ width: '100%' });
+}
+
+</script>
+</body>
+</html>

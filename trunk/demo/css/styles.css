@@ -1,0 +1,130 @@
+body {
+	padding: 0;
+	margin: 0;
+	font: 16px "Verdana";
+	overflow: hidden;
+}
+
+body.awesome {
+	/* background: #f5f6f6 url(../images/bkg_body.gif) repeat-x; */
+	background: #f8f6f3 url(../images/bkg_body1.png) repeat-x;
+}
+
+a {
+	color: #3c85cb;
+	font-weight: bold;
+}
+
+.choroplethjs {
+	color: #ef47a3;
+	font-weight: bold;
+}
+
+p,h2,h4 {
+	margin-top: 0;
+}
+
+h2,h4 {
+	font-family: "Arial", sans-serif;
+}
+
+h1 {
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	width: 300px;
+	height: 68px;
+	margin: 0;
+	background: transparent url(../images/logo.png) no-repeat;
+	text-indent: -20000px;
+	z-index: 3;
+}
+
+h4 {
+	position: relative;
+	height: 120px;
+	margin: 0;
+	font-size: 27px;
+}
+
+h4 a.next {
+	position: absolute;
+	bottom: 25px;
+	right: 0;
+}
+
+li {
+	margin: 10px 0;
+}
+
+li strong {
+	color: #3c85cb;
+}
+
+code {
+	display: block;
+	margin: 0 20px;
+	border: 2px solid black;
+	padding: 10px;
+	background: #fff;
+	font-size: 14px;
+}
+
+ul#bullets {
+	position: absolute;
+	top: 80px;
+	left: 75px;
+	width: 246px;
+	padding: 0;
+	list-style-type: none;
+	font: bold 26px "Geneva";
+	color: #fff;
+	z-index: 3;
+	text-shadow: #111 1px 1px;
+}
+
+ul#bullets li {
+	display: inline;
+	margin: 0;
+}
+
+img.docs {
+	position: absolute;
+	left: 60px;
+	bottom: 145px;
+	z-index: 3;
+	cursor: pointer;
+}
+
+img.download {
+	position: absolute;
+	left: 60px;
+	bottom: 45px;
+	z-index: 3;
+	cursor: pointer;
+}
+
+#map {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 2;
+	border-right: 1px solid black;
+}
+
+#content {
+	display: none;
+}
+
+body.awesome #content {
+	display: block;
+	margin: 10px 0 10px 380px;
+	width: 600px;
+	height: 100%;
+}
+
+.slide {
+	display('none');
+}

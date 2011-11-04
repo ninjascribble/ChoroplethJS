@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<project name="ChoroplethJS" basedir=".">
+
+  <property name="root.dir" location="."/>
+  <property name="src.dir" location="src"/>
+  <property name="src-dependencies.dir" location="src-dependencies"/>
+  <property name="lib.dir" location="build/lib"/>
+  <property name="build.dir" location="build"/>
+  <property name="working.dir" location="build/working"/>
+  <property name="dist.dir" location="dist"/>
+  <property name="doc.dir" location="doc"/>
+  <property name="demo.dir" location="demo"/>
+
+  <path id="test.classpath">
+    <pathelement path="${build.dir}"/>
+  </path>
+
+  <taskdef name="jslint"
+    classname="com.googlecode.jslint4java.ant.JSLintTask"
+    classpath="${lib.dir}/jslint4java-1.4.6.jar"/>
+
+  <taskdef name="jsdoctoolkit"
+    classname="uk.co.darrenhurley.ant.tasks.JsDocToolkit"
+    classpath="${lib.dir}/jsdoctoolkit-ant-task-1.0.2.jar;${lib.dir}/js.jar"/>
+
+  <target name="init"
+    description="Creates the build directory.">
+    <tstamp/>
+    <mkdir dir="${working.dir}"/>
+  </target>
+
+  <target name="clean"
+    description="Destroys all generated files and directories.">
+    <delete dir="${working.dir}"/>
+    <delete dir="${dist.dir}"/>
+    <delete dir="${doc.dir}"/>
+  </target>
+
+  <!--target name="test" depends="clean, init, jslint"
+    description="Runs the JUnit test suite. Output goes to stdout.">
+  </target-->
+
+  <target name="doc" depends="clean, init"
+    description="Generates documentation from JS comments.">
+    <mkdir dir="${doc.dir}"/>
+    <jsdoctoolkit jsdochome="${lib.dir}/jsdoc_toolkit-2.4.0/"
+      template="JsDoc"
+      outputdir="${doc.dir}/"
+      inputdir="${src.dir}/"/>
+  </target>
+
+  <target name="deploy" depends="clean, init, -js.minify"
+    description="TODO. Deploys a minified, compressed version of ChoroplethJS to ${dist.dir}.">
+    <mkdir dir="${dist.dir}"/>
+    <copy file="${working.dir}/ChoroplethJS.min.js"
+      tofile="${dist.dir}/ChoroplethJS.min.js"/>
+    <copy file="${working.dir}/ChoroplethJS.min.js"
+      tofile="${demo.dir}/js/ChoroplethJS.min.js"/>
+    <!--gzip src="${dist.dir}/ChoroplethJS.min.js" destfile="${dist.dir}/ChoroplethJS.min.js.gz"/-->
+  </target>
+
+  <target name="jslint"
+    description="Runs JS Lint against everything in the ${src.dir} directory.">
+    <jslint>
+      <formatter type="plain"/>
+      <fileset dir="${src.dir}" includes="*.js"/>
+    </jslint>
+  </target>
+
+  <target name="-js.concat"
+    description="Compiles all the .js files in the ${src.dir} directory into one.">
+    <concat destfile="${working.dir}/ChoroplethJS.js">
+      <filelist dir="${src-dependencies.dir}"
+        files="raphael-1.5.2.js, scale.raphael-0.8.js"/>
+      <filelist dir="${src.dir}"
+        files="ChoroplethJS.js, ChoroplethJS.GmapOverlay.js"/>
+      <fileset dir="${src.dir}/paths"
+        includes="*.js"
+        excludes=""/>
+    </concat>
+  </target>
+
+  <target name="-js.minify" depends="-js.concat"
+    description="Uses YUI Compressor to shrink the size of the .js library">
+    <java jar="${lib.dir}/yuicompressor-2.4.2.jar" fork="true">
+      <arg line="--type js -o ${working.dir}/ChoroplethJS.min.js ${working.dir}/ChoroplethJS.js"/>
+    </java>
+  </target>
+
+</project>
